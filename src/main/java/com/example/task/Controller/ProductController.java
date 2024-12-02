@@ -27,7 +27,7 @@ public class ProductController {
 	private ProductServices productServices;
 	
 	
-	@PostMapping("/creareproduct")
+	@PostMapping("/")
 	public ProductResponse createProduct(@RequestBody Product p) {
 		Product product =productServices.insertProduct(p);
 		
@@ -43,7 +43,7 @@ public class ProductController {
 		
 	}
 	
-	@GetMapping("/getallproduct")
+	@GetMapping("/")
 	public PaginatedResponse<ProductResponse> getAllProduct(@RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size ) {
 		
@@ -63,7 +63,7 @@ public class ProductController {
 		
 	
 	
-	@GetMapping("/findbyid/{id}")
+	@GetMapping("/{id}")
 	public ProductResponse getProductByID(@PathVariable long id) {
 		Product  product=  productServices.findByProductId(id);
 		
@@ -80,14 +80,14 @@ public class ProductController {
 		
 	}
 	
-	@PutMapping("/updateproduct/{id}")
+	@PutMapping("/{id}")
 	public Product updateProduct(@PathVariable long id, @RequestBody Product p) {
 		
 		return productServices.updateByProductId(id, p);
 		
 	}
 	
-	@DeleteMapping("/deletebyid/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteByProductId(@PathVariable long id) {
 		
 		productServices.deleteByProductId(id);

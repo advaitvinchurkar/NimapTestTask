@@ -28,7 +28,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	
-	@PostMapping("/createcategory")
+	@PostMapping("/")
 	public Category  createcategosy(@RequestBody Category c) {
 		
 		return categoryService.insertcategory(c);
@@ -36,7 +36,7 @@ public class CategoryController {
 	}
 	
 	
-	@GetMapping("/getallcategory")
+	@GetMapping("/")
 	public PaginatedResponse<CategoryResponce>  getAllCategory( @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size   ) {
 		
@@ -52,23 +52,40 @@ public class CategoryController {
 			            .collect(Collectors.toList()));
 	}
 	
-	@GetMapping("/findbycategoryid/{id}")
-	public Category findByCategoryid(@PathVariable long id) {
-		return categoryService.findByCategoryId(id);
-		
+	@GetMapping("/{id}")
+	public CategoryResponce findByCategoryid(@PathVariable long id) {
+
+
+		Category  category=  categoryService.findByCategoryId(id);
+
+
+
+		return  new CategoryResponce(
+
+				category.getCategoryId(),
+				category.getCategory_name(),
+				category.getCategory_description()
+		);
+
 	}
 	
-	@PutMapping("/updatebycategoryid/{id}")
-	public Category updateCategory(@PathVariable long id, @RequestBody Category c) {
-		
-		return categoryService.updateByCategoryId(id, c);
-		
+	@PutMapping("/{id}")
+	public CategoryResponce updateCategory(@PathVariable long id, @RequestBody Category c) {
+
+		Category  category=categoryService.updateByCategoryId(id, c);
+		return  new CategoryResponce(
+
+				category.getCategoryId(),
+				category.getCategory_name(),
+				category.getCategory_description()
+		);
+
 	}
 	
 	
 	
 	
-	@DeleteMapping("/deletebycategoryid/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteByCategoryId(@PathVariable long id) {
 		
 		categoryService.deleteByCategoryId(id);
